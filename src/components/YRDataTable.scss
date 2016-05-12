@@ -1,0 +1,77 @@
+:local(.yrdatatable) {
+
+  .options input.searchfield {
+    width: 200px;
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  .pagination {
+    margin-top: 0;
+  }
+
+  .table-bordered {
+    border: 1px solid #f4f4f4;
+
+    > tbody > tr {
+      cursor: pointer;
+    }
+
+    > thead > tr > th,
+    > tbody > tr > th,
+    > tfoot > tr > th,
+    > thead > tr > td,
+    > tbody > tr > td,
+    > tfoot > tr > td {
+      border: 1px solid #f4f4f4;
+    }
+
+    > thead > tr > th,
+    > thead > tr > td {
+      border-bottom-width: 2px;
+    }
+  }
+
+  .table {
+    &.align {
+      th {
+        text-align: left;
+      }
+
+      td {
+        text-align: right;
+      }
+    }
+
+    th {
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+    }
+
+    .empty-cell {
+      font-style: italic;
+      color: darkgray;
+      cursor: default;
+      user-select: none;
+    }
+
+    .sort-icon {
+      &:after {
+        float: right;
+        margin-top: 2px;
+        opacity: 0.2;
+        display: inline-block;
+        font: normal normal normal 14px/1 "Glyphicons Halflings";
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      &.sort-ascending:after  { content: '\e155'; opacity: 0.4; }
+      &.sort-descending:after { content: '\e156'; opacity: 0.4; }
+      &.sort-none:after  { content: '\e150'; }
+    }
+  }
+}

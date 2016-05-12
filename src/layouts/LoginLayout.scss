@@ -1,0 +1,86 @@
+/*
+ * Page: Login & Register
+ * ----------------------
+ */
+.login-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 300;
+  background: url(../images/q-more.png) center top;
+  background-size: 120px;
+  background-repeat: no-repeat;
+  overflow-y: auto;
+
+  h1 {
+    margin: 80px 0 10px 0;
+    padding: 0;
+    font-size: 28px;
+    color: #DF6A10;
+    font-weight: normal;
+  }
+
+  span {
+    display: block;
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+.login-logo a,
+.register-logo a {
+  color: #444;
+}
+.login-header {
+  height: 100px;
+  background: #fff;
+  background: url(../images/q-more.png) 25px 25px;
+  background-size: 140px;
+  background-repeat: no-repeat;
+}
+.login-page,
+.register-page {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 110px;
+  background: url(../images/chair-690341_1280.jpg) 100% #fff no-repeat;
+  background-size:cover;
+}
+.login-box,
+.register-box {
+  width: 360px;
+  margin: 7% auto;
+}
+@media (max-width: 768px) {
+  .login-box,
+  .register-box {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+.login-box-body,
+.register-box-body {
+  background: #fff;
+  padding: 20px;
+  border-top: 0;
+  color: #666;
+}
+.login-box-body .form-control-feedback,
+.register-box-body .form-control-feedback {
+  color: #777;
+}
+.login-box-msg,
+.register-box-msg {
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+}
+.social-auth-links {
+  margin: 10px 0;
+}
