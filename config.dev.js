@@ -29,6 +29,7 @@ module.exports = {
                  localIdentName: Adds the name of the style in front of the unique hash
                  SourceMap currently doesn't work because of this bug:
                  https://github.com/webpack/style-loader/pull/96
+                 https://github.com/webpack/style-loader/pull/124
                  [ 'style', 'css?sourceMap&localIdentName=[name]__[local]___[hash:base64:5]', 'autoprefixer?browsers=last 3 versions', 'sass?sourceMap&outputStyle=expanded' ]
                  */
                 loaders: ['style', 'css?localIdentName=[name]__[local]___[hash:base64:5]', 'autoprefixer?browsers=last 3 versions', 'sass?outputStyle=expanded']

@@ -7,7 +7,7 @@ import Posts from '../components/RedditPosts';
 import styles from './AboutContainer.scss';
 
 class About extends Component {
-    
+
     static propTypes = {
         selectedReddit: PropTypes.string.isRequired,
         posts: PropTypes.array.isRequired,
@@ -15,7 +15,7 @@ class About extends Component {
         lastUpdated: PropTypes.number,
         dispatch: PropTypes.func.isRequired
     };
-    
+
     constructor(props) {
         super(props)
         this.handleChange = this.handleChange.bind(this);
@@ -51,7 +51,7 @@ class About extends Component {
         const isEmpty = posts.length === 0;
 
         return (
-            <div>
+            <div class="container-fluid">
                 <Picker
                     value = {selectedReddit}
                     onChange = {this.handleChange}
@@ -98,7 +98,7 @@ function mapStateToProps(state) {
         isFetching: true,
         items: []
     };
-    
+
     return {
         selectedReddit,
         posts,

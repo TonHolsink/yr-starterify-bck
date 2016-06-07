@@ -1,24 +1,31 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import CounterStatus from '../components/CounterStatus';
-import AccountInfo from '../components/AccountInfo';
+import CustomMenu from './CustomMenu';
+import array from 'lodash/array';
+import {setContentMinHeight} from './sidebar/utils';
 
-import styles from './MainHeader.scss';
 
 class MainHeader extends Component {
 
     onClickSideBar = (e) => {
-        console.log('ckuck');
+        const body = document.body;
+        let classes = body.className.split(" ");
+        const width = window.innerWidth;
+        const c = (width < 768) ? 'sidebar-open' : 'sidebar-collapse';
+        (classes.indexOf(c) === -1) ? classes.push(c) : classes = array.without(classes, c);
+        body.className = classes.join(' ');
+        setContentMinHeight();
         e.preventDefault();
-
     };
 
     render() {
         return (
-            <header className={styles.mainheader}>
+            <header className="main-header">
                 {/* Logo */}
-                <Link className="logo" to="/"/>
+                <Link className="logo" to="/">
+                    <span class="logo-mini"><b>Q</b></span>
+                    <span class="logo-lg"><b>Q-more</b></span>
+                </Link>
                 {/* Header Navbar: style can be found in header.less */}
                 <nav className="navbar navbar-static-top" role="navigation">
                     {/* Sidebar toggle button*/}
@@ -26,23 +33,8 @@ class MainHeader extends Component {
                         <span className="sr-only">Toggle navigation</span>
                     </a>
 
-                    <div className="navbar-custom-menu">
-                        <ul className="nav navbar-nav">
-                            {/* Messages dropdown */}
-                            <li id="topbar-messages-placeholder" className="dropdown messages-menu" />
-                            {/* Notifications dropdown */}
-                            <li id="topbar-notifications-placeholder" className="dropdown notifications-menu" />
-                            {/* Tasks dropdown */}
-                            <li id="topbar-tasks-placeholder" className="dropdown tasks-menu" />
-                            {/* User Account dropdown */}
+                    <CustomMenu />
 
-                            <AccountInfo/>
-
-
-                            {/* Control Sidebar Toggle Button */}
-                            <li><a href="#" data-toggle="control-sidebar"><i className="fa fa-gears" /></a></li>
-                        </ul>
-                    </div>
                 </nav>
             </header>
         );

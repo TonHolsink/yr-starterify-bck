@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import styles from './MainFooter.scss';
+import './MainFooter.scss';
 
 class MainFooter extends Component {
     render() {
         return (
-            <footer className="main-footer">
+            <footer className="main-footer" id="main-footer">
                 <div className="pull-right hidden-xs">
                     <b>Version</b> 0.3.0
                 </div>

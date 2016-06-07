@@ -14,9 +14,9 @@ import ReduxFormsContainer from './containers/ReduxFormsContainer';
 import FileUploadContainer from './containers/FileUploadContainer';
 import AboutContainer from './containers/AboutContainer';
 import ReportListContainer from './containers/ReportListContainer';
-import ReportContainer from './containers/ReportContainer';
+import ReportContainer from './containers/Report/ReportContainer';
 import CounterCountainer from './containers/CounterContainer';
-import NotifyTestContainer from './containers/NotifyTestContainer';
+import ToastrTestContainer from './containers/ToastrTestContainer';
 
 export default (store) => {
 
@@ -39,7 +39,7 @@ export default (store) => {
     return (
         <Route>
             <Route path="/login" component={LoginLayout}/>
-            <Route component={MainLayout}>
+            <Route component={UserIsAuthenticated(MainLayout)}>
                 <Route path="/" component={HomepageContainer}/>
                 <Route path="/forms" component={FormsContainer}/>
                 <Route path="/redux-forms" component={ReduxFormsContainer}/>
@@ -47,8 +47,8 @@ export default (store) => {
                 <Route path="/about" component={AboutContainer}/>
                 <Route path="/reports" component={ReportListContainer}/>
                 <Route path="/report/:id" component={ReportContainer}/>
-                <Route path="/counter" component={UserIsAuthenticated(CounterCountainer)}/>
-                <Route path="/notifytest" component={NotifyTestContainer}/>
+                <Route path="/counter" component={CounterCountainer}/>
+                <Route path="/toastrtest" component={ToastrTestContainer}/>
             </Route>
         </Route>
     );

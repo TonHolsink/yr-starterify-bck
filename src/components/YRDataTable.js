@@ -14,7 +14,7 @@ class YRSearchField extends SearchField {
     render() {
         return (
             <div>
-                <label htmlFor={this.props.id}>{this.props.label}</label>
+                <label htmlFor={this.props.id}>{this.props.label}</label>{' '}
                 <input
                     id={this.props.id}
                     className={this.props.className}
@@ -51,7 +51,7 @@ class YRDatatable extends DataTable {
         return (
             <div styleName='yrdatatable'>
                 <div className="row">
-                    <div className="options col-xs-4">
+                    <div className="options col-xs-6">
                         {/*
                         <SelectField
                             className="form-control"
@@ -71,9 +71,9 @@ class YRDatatable extends DataTable {
                         />
                     </div>
                     { page.totalPages > 0 &&
-                        <div className="col-xs-8">
+                        <div className="col-xs-6 pagination-div">
                             <Pagination
-                                className="pagination pull-right"
+                                className="pagination"
                                 currentPage={page.currentPage}
                                 totalPages={page.totalPages}
                                 onChangePage={this.onChangePage}

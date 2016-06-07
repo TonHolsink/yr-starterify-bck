@@ -40,7 +40,7 @@ class Forms extends Component {
     render() {
 
         return (
-            <div>
+            <div class="container-fluid">
                 Hier komen formulieren
                 <div className="pietjepuk">
                     <form>

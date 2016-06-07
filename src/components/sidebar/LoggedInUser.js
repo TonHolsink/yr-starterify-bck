@@ -9,7 +9,7 @@ class LoggedInUser extends Component {
         return (
             <div className="user-panel">
                 <div className="pull-left image">
-                    <UserAvatar imageId={this.props.isAuthenticated && this.props.user.image.id} />
+                    <UserAvatar imageId={this.props.isAuthenticated && this.props.user.image && this.props.user.image.id} />
                 </div>
                 <div className="pull-left info">
                     <p>{this.props.isAuthenticated ?

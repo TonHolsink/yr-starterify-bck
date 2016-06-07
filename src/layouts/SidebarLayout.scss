@@ -1,0 +1,22 @@
+.main-sidebar {
+  top: auto;
+  padding-top: 0;
+}
+.sidebar-mini .main-sidebar {
+  z-index: 830;
+}
+.sidebar-mini .main-footer {
+  margin-left: 0 !important;
+  padding-left: 240px;
+}
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .main-footer {
+    margin-left: 0 !important;
+    padding-left: 60px;
+  }
+}
+@media (max-width: 767px) {
+  .sidebar-mini .main-footer {
+    padding-left: 10px;
+  }
+}

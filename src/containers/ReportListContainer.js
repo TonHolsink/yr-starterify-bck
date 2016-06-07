@@ -43,19 +43,18 @@ class ReportListContainer extends Component {
             return {
                 'onClick': (e) => {
                     console.log(row);
-                    this.props.router.push('report/' + row.id + '/');
+                    this.props.router.push('report/' + row._key + '/');
                 }
             };
         };
 
         const data = this.props.reports.map(function(row) {
-            console.log(row);
             return {
-                _key: row.id,
-                _date: Moment(row.date).locale('nl').calendar(),
+                _key: row.reference,
+                _date: Moment(row.lastStatusDate).locale('nl').calendar(),
                 _priority: <span class="label bg-green">Normaal</span>,
-                _username: row.username,
-                _name: row._name,
+                _username: row.user.fullname || row.user.email,
+                _subject: row.lastStatus,
                 _status: row.status
             };
         });
@@ -64,22 +63,22 @@ class ReportListContainer extends Component {
             { title: 'Datum', prop: '_date' },
             { title: 'Prioriteit', prop: '_priority' },
             { title: 'Melder (volledige naam, e-mail)', prop: '_username' },
-            { title: 'Onderwerp (nummer)', prop: '_name' },
+            { title: 'Onderwerp (nummer)', prop: '_subject' },
             { title: 'Status (toegewezen aan)', prop: '_status' }
         ];
 
         return (
             <div>
 
-                <ContentHeader title="Rapporten"/>
+                <ContentHeader title="Meldingen"/>
 
                 {/* Main content */}
                 <section className="content">
 
-                    <div class="box">
+                    <div class="box container-fluid table-responsive">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title">Rapportages</h3>
+                            <h3 class="box-title">Meldingen</h3>
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i className="fa fa-minus"/>
                                 </button>
@@ -119,7 +118,7 @@ class ReportListContainer extends Component {
                                     keys={[ '_key' ]}
                                     columns={columns}
                                     initialData={data}
-                                    initialPageLength={10}
+                                    initialPageLength={25}
                                     initialSortBy={{ prop: 'name', order: 'descending' }}
                                     pageLengthOptions={[ 10, 25, 50 ]}
                                 />

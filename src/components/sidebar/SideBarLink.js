@@ -7,12 +7,13 @@ class SideBarLink extends Component {
         to: '/',
         icon: 'fa fa-globe',
         label: 'label',
-        color: 'red'
+        color: 'red',
+        activeClassName: 'active'
     };
 
     render() {
         return (
-            <Link {...{ to: this.props.to }}>
+            <Link {...{ to: this.props.to, activeClassName: this.props.activeClassName }}>
                 <i {...{ className: this.props.icon }}/><span>{this.props.label}</span>
                 {
                     this.props.inNumber &&

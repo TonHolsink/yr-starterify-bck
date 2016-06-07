@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import {jsonFetch} from '../utils';
 
 export const REQUEST_REPORTS = 'REQUEST_REPORTS';
 export const RECEIVE_REPORTS = 'RECEIVE_REPORTS';
@@ -22,11 +22,6 @@ function receiveReports(query, json) {
 export function fetchReports(query) {
     return (dispatch) => {
         dispatch(requestReports(query));
-        return fetch('http://demo.q-more.nl/services/items.formReportsJSON.getFormReports', {
-        method: 'post',
-            body: JSON.stringify({query: query})
-        })
-            .then(response => response.json())
-            .then(json => dispatch(receiveReports(query, json)));
+        return jsonFetch('items.formReportsJSON.getFormReports').then(json => dispatch(receiveReports(query, json)));
     };
 }

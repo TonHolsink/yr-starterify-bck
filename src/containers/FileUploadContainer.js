@@ -14,10 +14,10 @@ class FileUpload extends Component {
     render() {
         // onProgress={(e, request, progress) => {console.log('progress', e, request, progress);}}
         return (
-            <div>
+            <div class="container-fluid">
                 <h1>Fileupload</h1>
                 <FileUploadProgress
-                    url='http://demo.q-more.nl/services/files.filesJSON.uploadFile'
+                    url={window.backendURL + 'files.filesJSON.uploadFile'}
                     onLoad={ (e, request) => {
                         const f = JSON.parse(request.responseText).result.files[0].name;
                         this.setState({files: [...this.state.files, f] });

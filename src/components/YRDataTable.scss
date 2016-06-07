@@ -3,13 +3,25 @@
   .options input.searchfield {
     width: 200px;
     display: inline-block;
-    margin-left: 10px;
   }
 
   .pagination {
     margin-top: 0;
+    margin-bottom: 0;
+    float: right;
+    > li {
+      display: table-cell;
+    }
   }
 
+  @media (max-width: 480px) {
+    .pagination, .pagination-div {
+      float: none;
+    }
+    .pagination {
+      margin-top: 1em;
+    }
+  }
   .table-bordered {
     border: 1px solid #f4f4f4;
 
@@ -33,6 +45,7 @@
   }
 
   .table {
+    margin-top: 1em;
     &.align {
       th {
         text-align: left;

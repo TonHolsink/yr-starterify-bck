@@ -2,11 +2,11 @@ import { createReducer } from '../utils';
 import { USER_LOGGED_IN,USER_LOGGED_OUT,LOGIN_USER_FAILURE, LOGIN_AUTHENTICATING } from '../actions/AuthActions'
 
 const initialState = {
-    token: null,
     user: null,
     isAuthenticated: false,
     isAuthenticating: false,
-    statusText: null
+    statusText: null,
+    statusError: true
 };
 
 export default createReducer(initialState, {
@@ -20,9 +20,9 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
-            'token': payload.token,
             'user': payload.user,
-            'statusText': 'You have been successfully logged in.'
+            'statusText': 'U bent ingelogd.',
+            'statusError': false
         });
 
     },
@@ -30,17 +30,17 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': false,
-            'token': null,
             'user': null,
-            'statusText': `Inloggen mislukt: ${payload.statusText}`
+            'statusText': payload.statusText && `Inloggen mislukt: ${payload.statusText}`,
+            'statusError': true
         });
     },
-    [USER_LOGGED_OUT]: (state, payload) => {
+    [USER_LOGGED_OUT]: (state) => {
         return Object.assign({}, state, {
             'isAuthenticated': false,
-            'token': null,
             'user': null,
-            'statusText': 'You have been successfully logged out.'
+            'statusText': 'U bent uitgelogd.',
+            'statusError': false
         });
     }
 });

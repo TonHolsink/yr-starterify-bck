@@ -18,6 +18,7 @@ import NumberInput from './form/NumberInput'
 import Moment from 'moment'
 import momentLocalizer from 'react-widgets/lib/localizers/moment'
 import {zeroTime} from '../utils/date'
+import {toastr} from 'react-redux-toastr'
 export const fields = ['startDate', 'endDate', 'origin', 'destination', 'hotel', 'hasCar', 'flightClass', 'personCount', 'story'];
 
 Moment.locale('nl');
@@ -77,14 +78,14 @@ class TravelForm extends Component {
      * Set endDate to startDate if it's blank or would otherwise be invalid.
      */
     handleStartDateChange(startDate) {
-        var {endDate} = this.props.fields;
+        const {endDate} = this.props.fields;
         if (endDate.value == null || endDate.value < startDate) {
             endDate.onChange(startDate)
         }
     }
 
     save(data) {
-        var that = this;
+        const that = this;
         return new Promise(
             function (resolve, reject) {
                 setTimeout(
@@ -94,6 +95,7 @@ class TravelForm extends Component {
             }).then(
             function () {
                 that.setState({fakeSubmitted: data});
+                toastr.success('success', 'De gegevens zijn succesvol opgeslagen');
                 // console.log(Moment(data.startDate).format("dddd, MMMM Do YYYY, h:mm:ss a"));
             }
         );
@@ -102,12 +104,12 @@ class TravelForm extends Component {
     render() {
         const {fields, resetForm, handleSubmit, load, submitting} = this.props;
         const {fakeSubmitted} = this.state;
-        return <div className="container">
+        return <div className="container-fluid">
             <PageHeader>redux-form example</PageHeader>
             <div class='text-center'>
-                <button type="button" class="btn btn-success btn-lg" onClick={() => load(data)}>Load Account</button>
+                <button type="button" class="btn btn-success" onClick={() => load(data)}>Load Account</button>
                 {' '}
-                <button type="button" class="btn btn-success btn-lg" onClick={() => resetForm()}>Reset</button>
+                <button type="button" class="btn btn-success" onClick={() => resetForm()}>Reset</button>
             </div>
             <form className="form-horizontal" onSubmit={handleSubmit(this.save.bind(this))}>
                 <StaticField label="First Name:" value="Steve"/>
@@ -196,7 +198,6 @@ class TravelForm extends Component {
                 <Row className="form-group">
                     <Col sm={12} className="text-center">
                         <LoadingButton
-                            bsSize="large"
                             bsStyle="primary"
                             label="Add Travel"
                             loading={submitting}

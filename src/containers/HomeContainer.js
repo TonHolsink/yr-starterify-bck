@@ -15,7 +15,7 @@ class HomeContainer extends Component {
         return (
             <div>
 
-                <ContentHeader title="Dasboard"/>
+                <ContentHeader title="Dashboard"/>
 
                 {/* Main content */}
                 <section className="content">

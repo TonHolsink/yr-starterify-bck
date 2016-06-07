@@ -13,8 +13,16 @@ class LoginContainer extends Component {
         replace: PropTypes.func.isRequired
     };
 
+    state = {
+        loginName: localStorage.getItem('loginName') || ''
+    };
+
     componentWillMount() {
         this.ensureNotLoggedIn(this.props);
+    };
+
+    componentDidMount() {
+        if (this.state.loginName) this.refs.password.focus();
     };
 
     componentWillReceiveProps(nextProps) {
@@ -31,10 +39,12 @@ class LoginContainer extends Component {
 
     onClick = (e) => {
         e.preventDefault();
+        localStorage.setItem('loginName', this.refs.name.value);
         this.props.validateLogin(this.refs.name.value, this.refs.password.value);
     };
 
     render() {
+        
         return (
             <div>
                 <div className="login-header">
@@ -48,11 +58,11 @@ class LoginContainer extends Component {
                                 <span>Versie 0.3.0</span>
                             </div>
 
-                            {this.props.statusText ? <div className='alert alert-error'>{this.props.statusText}</div> : ''}
+                            {this.props.statusText ? <div {...{ className: 'alert alert-' + (this.props.statusError ? 'error' : 'success') }}>{this.props.statusText}</div> : ''}
 
                             <form id="loginform" action="/login" method="post">
                                 <div className="form-group has-feedback">
-                                    <input type="text" ref="name" className="form-control" placeholder="Gebruikersnaam" />
+                                    <input type="text" ref="name" className="form-control" placeholder="Gebruikersnaam" defaultValue={this.state.loginName} />
                                     <span className="glyphicon glyphicon-user form-control-feedback" />
                                 </div>
                                 <div className="form-group has-feedback">
@@ -81,11 +91,13 @@ function mapStateToProps(state, ownProps) {
     const isAuthenticated = state.authState.isAuthenticated || false;
     const redirect = ownProps.location.query.redirect || '/';
     const statusText = state.authState.statusText || '';
+    const statusError = state.authState.statusError || false;
 
     return {
         isAuthenticated,
         redirect,
-        statusText
+        statusText,
+        statusError
     }
 }
 

@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import {jsonFetch} from '../utils';
 
 export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
@@ -16,7 +16,6 @@ export function loginUserSuccess(data) {
     return {
         type: USER_LOGGED_IN,
         payload: {
-            token: 'asdsd',
             user: data.user
         }
     }
@@ -35,7 +34,6 @@ export function loginUserRequest() {
 }
 
 export function loginUserFailure(error) {
-    localStorage.removeItem('token');
     return {
         type: LOGIN_USER_FAILURE,
         payload: {
@@ -45,29 +43,72 @@ export function loginUserFailure(error) {
     }
 }
 
+export function logoutSession() {
+    return function(dispatch) {
+        dispatch(logout());
+        return jsonFetch('users.usersJSON.logOut')
+        .then(response => {
+            try {
+                dispatch(logout());
+            } catch (e) {
+                console.log('logoutSession', e);
+                dispatch(loginUserFailure({
+                    response: {
+                        status: 403
+                    }
+                }));
+            }
+        })
+        .catch(error => {
+            dispatch(loginUserFailure(error));
+        });
+    }
+}
+
+export function validateAuthSession() {
+    return function(dispatch) {
+        dispatch(loginUserRequest());
+        return jsonFetch('users.usersJSON.checkSession')
+        .then(response => {
+            try {
+                dispatch(loginUserSuccess(response));
+            } catch (e) {
+                console.log('validateAuthSession', e);
+                dispatch(loginUserFailure({
+                    response: {
+                        status: 403
+                    }
+                }));
+            }
+        })
+        .catch(error => {
+            dispatch(loginUserFailure(error));
+        });
+    }
+}
+
 export function validateLogin(username, password) {
     return function(dispatch) {
         dispatch(loginUserRequest());
-        return fetch('http://demo.q-more.nl/services/users.usersJSON.checkLogin', {
-            method: 'post',
-            body: JSON.stringify({username: username, password: password, subscriber: 'bouw'})
+        return jsonFetch('users.usersJSON.checkLogin', {
+            username: username,
+            password: password,
+            subscriber: 'bouw'}
+        ).then(response => {
+            try {
+                dispatch(loginUserSuccess(response));
+            } catch (e) {
+                console.log('validateLogin', e);
+                dispatch(loginUserFailure({
+                    response: {
+                        status: 403,
+                        statusText: 'Ongeldig inlognaam of wachtwoord'
+                    }
+                }));
+            }
         })
-            .then(response => response.json())
-            .then(response => {
-                try {
-                    dispatch(loginUserSuccess(response));
-                } catch (e) {
-                    console.log('validateLogin', e);
-                    dispatch(loginUserFailure({
-                        response: {
-                            status: 403,
-                            statusText: 'Ongeldig inlognaam of wachtwoord'
-                        }
-                    }));
-                }
-            })
-            .catch(error => {
-                dispatch(loginUserFailure(error));
-            })
+        .catch(error => {
+            dispatch(loginUserFailure(error));
+        })
     }
 }

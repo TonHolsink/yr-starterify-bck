@@ -1,2 +1,2 @@
-# yr-starterify-bck
+# yr-starterify
 private project

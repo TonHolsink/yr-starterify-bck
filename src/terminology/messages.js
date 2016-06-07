@@ -7,11 +7,17 @@
  * @param subscriber {string=} The subscriber
  * @returns {*|string} The message or an empty string
  */
-export default function msg(key, subscriber) {
+function _msg(key, subscriber) {
     const DEFAULT = 'default';
     subscriber = subscriber || DEFAULT;
     const errMsg = 'Message met key = ' + key + ' en subscriber = ' + subscriber + ' niet gevonden!';
     let result = null;
+
+    //Als de subscriber geen entry heeft in messages, val dan terug op default
+    if (typeof messages[subscriber] == 'undefined') {
+        subscriber = DEFAULT;
+    }
+
     try {
         result = messages[subscriber][key];
         if (subscriber !== DEFAULT && typeof result == 'undefined') {
@@ -25,7 +31,19 @@ export default function msg(key, subscriber) {
         console.log(errMsg)
     }
 
-    return result || '';
+    return result || '{ ' + key +' }';
+}
+
+/**
+ * Returns a message for given key
+ * It tries to lookup the subscriber in the store
+ *
+ * @param key {string} The message key
+ * @returns {*|string} The message or an empty string
+ */
+export default function msg(key) {
+    let subscriber = window.getSubscriber();
+    return _msg(key, subscriber);
 }
 
 /**
@@ -37,7 +55,7 @@ const messages = {
         'lbl_email': 'E-mail',
         'lbl_age': 'Leeftijd'
     },
-    'kastanje': {
-        'lbl_adress': 'Adres kastanje'
+    'bouw': {
+        'lbl_username': 'Gebruiker',
     }
 };
