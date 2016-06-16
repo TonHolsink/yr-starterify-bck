@@ -1,6 +1,6 @@
 import { jsonFetch } from '../utils';
 import {isEmpty} from 'lodash/lang';
-import sortBy from 'lodash/sortby';
+import sortBy from 'lodash.sortby';
 
 function niceEmail(customerOrEmployee , useFullname) {
     let result = "";

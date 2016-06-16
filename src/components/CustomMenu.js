@@ -1,29 +1,24 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import MessageDropdownMenu from './dropdownmenu/MessageDropdownMenu'
 import NotificationDropdownMenu from './dropdownmenu/NotificationDropdownMenu'
 import TaskDropdownMenu from './dropdownmenu/TaskDropdownMenu'
 import AccountInfo from './dropdownmenu/AccountInfo'
 
-import {EventEmitter} from 'events';
-
+import {connect} from 'react-redux'
+import {controlSideBarToggle} from '../actions/AppActions'
 
 /**
  * Custom menu balk
  */
 export default class CustomMenu extends Component {
 
-    constructor(props) {
-        super(props);
-        window.controlsidebaremitter = new EventEmitter();
-    }
-
-    onClickControlBar = (e) => {
-        window.controlsidebaremitter.emit('toggle-controlbar');
-        console.log('EMIT');
-        e.preventDefault();
+    static propTypes = {
+        onControlSideBarToggle: PropTypes.func.isRequired
     };
 
     render() {
+        const {onControlSideBarToggle} = this.props;
+
         return (
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
@@ -34,9 +29,20 @@ export default class CustomMenu extends Component {
                     <AccountInfo cssClass="user user-menu" id="topbar-user-placeholder"/>
 
                     {/* Control Sidebar Toggle Button */}
-                    <li><a href="#" onClick={this.onClickControlBar} data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li>
+                    <li><a href="#" onClick={onControlSideBarToggle} data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li>
                 </ul>
             </div>
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onControlSideBarToggle: () => dispatch(controlSideBarToggle())
+    }
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(CustomMenu)

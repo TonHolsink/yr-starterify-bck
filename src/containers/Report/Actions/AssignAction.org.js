@@ -8,7 +8,7 @@ import TextAreaInput from '../../../components/form/TextAreaInput';
 
 import { jsonFetch } from '../../../utils';
 import {isEmpty} from 'lodash/lang';
-import sortBy from 'lodash/sortby';
+import sortBy from 'lodash.sortby';
 
 export const fields = ['actionType', 'id', 'assignContractors', 'assignEmployees', 'remarks'];
 

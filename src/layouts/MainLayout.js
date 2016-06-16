@@ -4,7 +4,7 @@
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import './AdminLTE.css';
-import './skins/yellow.css';
+import './skins/all-skins.scss';
 import '../../node_modules/react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import '../css/custom.css';
 import React, { Component, PropTypes } from 'react';
