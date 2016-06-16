@@ -1,9 +1,13 @@
-import React, {Component, PropTypes} from 'react'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-import FormField from './FormField'
+import React, {Component, PropTypes} from 'react';
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import FormField from './FormField';
 
 export default class DateInput extends Component {
     shouldComponentUpdate = FormField.shouldFormFieldUpdate;
+
+    static propTypes = {
+        field: PropTypes.object.isRequired
+    };
 
     render() {
         const {field, help, label, afterChange, cols, ...inputProps} = this.props;
@@ -28,9 +32,4 @@ export default class DateInput extends Component {
     }
 
 }
-
-DateInput.propTypes = {
-    field: PropTypes.object.isRequired
-};
-
 

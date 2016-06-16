@@ -5,6 +5,10 @@ import FormField from './FormField'
 export default class DateInput extends Component {
     shouldComponentUpdate = FormField.shouldFormFieldUpdate;
 
+    static propTypes = {
+        field: PropTypes.object.isRequired
+    };
+
     render() {
         const {field, help, label, afterChange, cols, ...inputProps} = this.props;
         let onChange = field.onChange;
@@ -27,9 +31,3 @@ export default class DateInput extends Component {
     }
 
 }
-
-DateInput.propTypes = {
-    field: PropTypes.object.isRequired
-};
-
-

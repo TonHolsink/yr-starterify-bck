@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import SideBar from '../components/sidebar/SideBar';
+import ControlSideBar from '../components/sidebar/ControlSideBar';
 import MainHeader from '../components/MainHeader';
 import MainFooter from '../components/MainFooter';
 import {setContentMinHeight} from '../components/sidebar/utils';
+import { connect } from 'react-redux';
 import './SidebarLayout.scss'
 
-export default class SidebarLayout extends Component {
+class SidebarLayout extends Component {
     componentWillMount() {
         const body = document.body;
         body.className = 'hold-transition skin-yellow sidebar-mini';
@@ -27,11 +29,14 @@ export default class SidebarLayout extends Component {
         const {children} = this.props;
         const footerMarginStyle = {marginBottom: '70px'};
 
+        const locationResources = window.backendURL + this.props.subscriber.locationResources;
+        const resourcesHeader = {backgroundImage: 'url(' + locationResources + 'img/header.jpg)'};
+
         return (
             <div class="wrapper">
 
                 <MainHeader/>
-                <div class="subscriber-banner"/>
+                <div class="subscriber-banner" style={resourcesHeader}/>
                 <SideBar/>
 
                 {/* Content Wrapper. Contains page content */}
@@ -42,8 +47,7 @@ export default class SidebarLayout extends Component {
                 <MainFooter/>
 
                 {/* Control Sidebar */}
-                <aside id="controlbar-placeholder" className="control-sidebar control-sidebar-dark">
-                </aside>{/* /.control-sidebar */}
+                <ControlSideBar />
                 {/* Add the sidebar's background. This div must be placed
                  immediately after the control sidebar */}
                 <div style={{position: 'fixed', height: 'auto'}} class="control-sidebar-bg"></div>
@@ -56,3 +60,13 @@ export default class SidebarLayout extends Component {
 SidebarLayout.propTypes = {
     children: React.PropTypes.object
 };
+
+
+function mapStateToProps(state, ownProps) {
+    const subscriber = state.authState.subscriber || false;
+    return {
+        subscriber
+    }
+}
+
+export default connect(mapStateToProps)(SidebarLayout);

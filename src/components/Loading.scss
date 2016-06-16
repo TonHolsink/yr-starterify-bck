@@ -1,0 +1,11 @@
+:local(.loading) {
+  //position: absolute;
+  top: 300px;
+  animation: color-change 1s infinite;
+}
+
+@keyframes color-change {
+  0% { color: red; }
+  50% { color: black; }
+  100% { color: red; }
+}

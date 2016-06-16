@@ -5,7 +5,9 @@
 .subscriber-banner {
   height: 75px;
   border-bottom: 2px solid #f39c12;
-  background: url('../images/header.jpg') no-repeat left top;
+  background-image: url('../images/header.jpg');
+  background-repeat: no-repeat;
+  background-position: left top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

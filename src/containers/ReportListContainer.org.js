@@ -12,8 +12,6 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Loading from '../components/Loading';
 import msg from '../terminology/messages.js';
 
-import { hasClass } from '../utils/dom';
-
 Moment.locale('nl');
 momentLocalizer(Moment);
 
@@ -26,14 +24,6 @@ class ReportListContainer extends Component {
         dispatch: PropTypes.func.isRequired
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            checkedRows: []
-        };
-
-    }
-
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch(fetchReportList(null));
@@ -45,30 +35,6 @@ class ReportListContainer extends Component {
         dispatch(fetchReportList(null));
     };
 
-    handleActionCheckClick = (e, row) => {
-        e.stopPropagation();
-        const i = this.state.checkedRows.indexOf(row._key);
-        if (e.target.checked) {
-            //Toevoegen
-            if (i === -1) {
-                this.setState(Object.assign({}, this.state, {checkedRows: [...this.state.checkedRows, row._key]}));
-            }
-        } else {
-            //Verwijderen
-            if (i > -1) {
-                this.setState(Object.assign({}, this.state, {checkedRows: [...this.state.checkedRows.slice(0, i), ...this.state.checkedRows.slice(i+1)]}));
-            }
-        }
-    };
-
-    renderActionCheck = (val, row) => {
-        return <input type="checkbox" class="stop-propagation" checked={this.state.checkedRows.indexOf(row._key) > -1} onChange={(event) => this.handleActionCheckClick(event, row)} />;
-    };
-
-    handleActionDropdownSelect = (eventKey) => {
-        console.log(eventKey, this.state.checkedRows);
-    };
-
     render() {
 
         const { reports, isFetching, lastUpdated } = this.props;
@@ -76,7 +42,8 @@ class ReportListContainer extends Component {
 
         const buildRowOptions = (row) => {
             return {
-                'onClick': (e) => { hasClass(e.target, 'stop-propagation') ? e.stopPropagation(): this.props.router.push('report/' + row._key + '/');
+                'onClick': () => {
+                    this.props.router.push('report/' + row._key + '/');
                 }
             };
         };
@@ -84,32 +51,20 @@ class ReportListContainer extends Component {
         const data = this.props.reports.map(function(row) {
             return {
                 _key: row.reference,
-                _subject: row.name,
-                _username: row.user.fullname || row.user.email,
                 _date: Moment(row.lastStatusDate).calendar(),
                 _priority: <span class="label bg-green">Normaal</span>,
-                _status: function() {
-                    const status = msg('item_status_' + row.status);
-                    return row.status === 'ASSIGNED' ? `${status}\n[CONTRACTERUSERNAME]` : status;
-                }(),
-                _message: row.lastStatus
+                _username: row.user.fullname || row.user.email,
+                _subject: row.lastStatus,
+                _status: msg('item_status_' + row.status)
             };
         });
 
         const columns = [
-            {title: "", render: this.renderActionCheck, className: 'stop-propagation no-pointer', sortable: false},
-            { title: 'Nummer', prop: '_key' },
-            { title: 'Onderwerp', prop: '_subject' },
-            { title: 'Melder (volledige naam, e-mail)', prop: '_username' },
             { title: 'Datum', prop: '_date' },
             { title: 'Prioriteit', prop: '_priority' },
-            { title: 'Status (toegewezen aan)', prop: '_status' },
-            { title: 'Bericht', prop: '_message' }
-        ];
-
-        const actionDropdownOptions = [
-            {key: 'ARCHIVE', value: 'Archiveren'},
-            {key: 'DELETE', value: 'Verwijderen'}
+            { title: 'Melder (volledige naam, e-mail)', prop: '_username' },
+            { title: 'Onderwerp (nummer)', prop: '_subject' },
+            { title: 'Status (toegewezen aan)', prop: '_status' }
         ];
 
         return (
@@ -123,7 +78,6 @@ class ReportListContainer extends Component {
 
                         <div class="box-header with-border">
                             <h3 class="box-title">Meldingen</h3>
-                            {' '}
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"/></button>
 
@@ -158,18 +112,6 @@ class ReportListContainer extends Component {
                                         initialSortBy={{ prop: '_date', order: 'descending' }}
                                         pageLengthOptions={[ 10, 25, 50 ]}
                                         hover={true}
-                                        searchbar=                            {
-                                this.state.checkedRows.length > 0 ?
-                                <DropdownButton bsSize="sm"
-                                                title="Kies actie &#8230;"
-                                                id="bg-nested-dropdown"
-                                                onSelect={this.handleActionDropdownSelect}
-                                >
-                                    {actionDropdownOptions.map((option) => <MenuItem key={option.key} eventKey={option.key}>{option.value}</MenuItem>)}
-                                </DropdownButton>
-                                : null
-                            }
-
                                     />
                                 </div>
                             }

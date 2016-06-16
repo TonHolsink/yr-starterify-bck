@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import CustomMenu from './CustomMenu';
 import array from 'lodash/array';
+import { connect } from 'react-redux';
 import {setContentMinHeight} from './sidebar/utils';
 
 
@@ -19,12 +20,16 @@ class MainHeader extends Component {
     };
 
     render() {
+
+        const { subscriberName } = this.props.subscriber;
+        const nameInSiderbar = subscriberName && subscriberName.capitalizeFirstLetter();
+
         return (
             <header className="main-header">
                 {/* Logo */}
                 <Link className="logo" to="/">
-                    <span class="logo-mini"><b>Q</b></span>
-                    <span class="logo-lg"><b>Q-more</b></span>
+                    <span class="logo-mini"><b>{nameInSiderbar.charAt(0)}</b></span>
+                    <span class="logo-lg"><b>{nameInSiderbar}</b></span>
                 </Link>
                 {/* Header Navbar: style can be found in header.less */}
                 <nav className="navbar navbar-static-top" role="navigation">
@@ -41,4 +46,11 @@ class MainHeader extends Component {
     }
 }
 
-export default MainHeader;
+function mapStateToProps(state, ownProps) {
+    const subscriber = state.authState.subscriber || false;
+    return {
+        subscriber
+    }
+}
+
+export default connect(mapStateToProps)(MainHeader);

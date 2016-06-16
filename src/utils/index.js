@@ -35,6 +35,7 @@ export function parseJSON(response) {
 }
 
 export function jsonFetch(service, parameters) {
+    parameters = Object.assign({}, parameters, { origin: window.location.protocol + '//' + window.location.host });
     let response;
     return fetch(window.backendURL + service, {
         method: 'post',
@@ -56,3 +57,12 @@ export function jsonFetch(service, parameters) {
         return json;
     });
 }
+
+export function getSubscriberFromURL() {
+    const parts = location.hostname.split('.');
+    return parts[0];
+}
+
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};

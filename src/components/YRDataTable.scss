@@ -5,6 +5,18 @@
     display: inline-block;
   }
 
+  .searchbar {
+    > div {
+      display: inline-block;
+      @media (min-width: 481px) {
+        margin-left: 1em;
+      }
+    }
+    > div:first-child {
+      margin-left: 0;
+    }
+  }
+
   .pagination {
     margin-top: 0;
     margin-bottom: 0;
@@ -25,10 +37,6 @@
   .table-bordered {
     border: 1px solid #f4f4f4;
 
-    > tbody > tr {
-      cursor: pointer;
-    }
-
     > thead > tr > th,
     > tbody > tr > th,
     > tfoot > tr > th,
@@ -41,6 +49,12 @@
     > thead > tr > th,
     > thead > tr > td {
       border-bottom-width: 2px;
+    }
+  }
+
+  .table-hover {
+    > tbody > tr {
+      cursor: pointer;
     }
   }
 
@@ -82,9 +96,17 @@
         -moz-osx-font-smoothing: grayscale;
       }
 
-      &.sort-ascending:after  { content: '\e155'; opacity: 0.4; }
-      &.sort-descending:after { content: '\e156'; opacity: 0.4; }
-      &.sort-none:after  { content: '\e150'; }
+      &.sort-ascending:after {
+        content: '\e155';
+        opacity: 0.4;
+      }
+      &.sort-descending:after {
+        content: '\e156';
+        opacity: 0.4;
+      }
+      &.sort-none:after {
+        content: '\e150';
+      }
     }
   }
 }

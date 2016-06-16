@@ -1,3 +1,6 @@
 .pointer {
     cursor: pointer;
 }
+.no-pointer {
+    cursor: default;
+}

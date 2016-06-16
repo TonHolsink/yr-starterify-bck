@@ -3,19 +3,22 @@ import {reduxForm} from 'redux-form';
 import {toastr} from 'react-redux-toastr';
 
 import Row from 'react-bootstrap/lib/Row';
-import SelectInput from '../../../components/form/SelectInput';
-import TextAreaInput from '../../../components/form/TextAreaInput';
+import Checkbox from '../../components/form/Checkbox';
+import TextAreaInput from '../../components/form/TextAreaInput';
+import SelectInput from '../../components/form/SelectInput';
 
-export const fields = ['actionType', 'id', 'internalPriority', 'remarks'];
+export const fields = ['toReporter', 'to', 'message'];
 
 const validate = values => {
     const errors = {};
-    if (!values.internalPriority) errors.internalPriority = 'Dit is een verplicht veld.';
-    if (!values.remarks) errors.remarks = 'Dit is een verplicht veld.';
+    if (!values.message) errors.message = 'Dit is een verplicht veld.';
+    if (!values.to) {
+        errors.to = 'U moet een bestemming kiezen';
+    }
     return errors
 };
 
-class PriorityAction extends Component {
+export default class Message extends Component {
 
     static propTypes = {
         fields: PropTypes.object.isRequired,
@@ -25,39 +28,48 @@ class PriorityAction extends Component {
     };
 
     save = (data) => {
+        //Niet zo fraai, maar checkbox zit niet in submit
+        //TODO: Andere oplossing bedenken
+        data.toReporter = data.toReporter || false;
         toastr.success('success', 'De gegevens zijn succesvol opgeslagen');
-        // alert(JSON.stringify(data, null, 2));
+        alert(JSON.stringify(data, null, 2));
         this.props.handleDismiss && this.props.handleDismiss();
     };
 
     render() {
         const {fields, handleSubmit, submitting, handleDismiss} = this.props;
-        return(
+        return (
             <form class="form-horizontal"
                   onSubmit={handleSubmit(this.save)}
             >
-                <h4>Prioriteit</h4>
+                <Row>
+                    <Checkbox
+                        cols={2}
+                        disabled={submitting}
+                        field={fields.toReporter}
+                        label="Aan melder"
+                        name="toReporter"
+                        id="toReporter"
+                    />
+                </Row>
                 <Row>
                     <SelectInput
                         cols={2}
                         disabled={submitting}
-                        field={fields.internalPriority}
-                        label="Prioriteit"
-                        id="priority"
+                        field={fields.to}
+                        label="Aan / met"
                         list={[
-                            {key: 'form.prio.1', value: 'Zeer laag'},
-                            {key: 'form.prio.2', value: 'Laag'},
-                            {key: 'form.prio.3', value: 'Gemiddeld laag'},
-                            {key: 'form.prio.4', value: 'Hoog'},
-                            {key: 'form.prio.5', value: 'Zeer hoog'}
-                         ]}
+                                {key: 'info@rondomtuinen.com', value: 'Rondom Tuinen <info@rondomtuinen.com>'},
+                                {key: 'pgras@massier.nl', value: 'Massier <pgras@massier.nl>'},
+                                {key: 'planning@hulsman-zonwering.nl', value: 'Huisman Zonwering <planning@hulsman-zonwering.nl>'},
+                                {key: 'j.mandjes@eks.nl', value: 'EKS <j.mandjes@eks.nl>'}
+                            ]}
                     />
                 </Row>
                 <TextAreaInput
                     disabled={submitting}
-                    field={fields.remarks}
-                    id="remarks"
-                    label="Opmerkingen"
+                    field={fields.message}
+                    label="Bericht"
                     rows={5}
                 />
                 <div class="text-right">
@@ -72,11 +84,11 @@ class PriorityAction extends Component {
                 </div>
             </form>
         )
+
     }
 }
-
 export default reduxForm({
-    form: 'priorityAction',
+    form: 'message',
     fields,
     validate
-})(PriorityAction)
+})(Message)

@@ -1,12 +1,13 @@
 import { createReducer } from '../utils';
-import { USER_LOGGED_IN,USER_LOGGED_OUT,LOGIN_USER_FAILURE, LOGIN_AUTHENTICATING } from '../actions/AuthActions'
+import { USER_LOGGED_IN,USER_LOGGED_OUT,LOGIN_USER_FAILURE, LOGIN_AUTHENTICATING, SUBSCRIBER_SET } from '../actions/AuthActions'
 
 const initialState = {
     user: null,
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: null,
-    statusError: true
+    statusError: true,
+    subscriber: null
 };
 
 export default createReducer(initialState, {
@@ -41,6 +42,11 @@ export default createReducer(initialState, {
             'user': null,
             'statusText': 'U bent uitgelogd.',
             'statusError': false
+        });
+    },
+    [SUBSCRIBER_SET]: (state, payload) => {
+        return Object.assign({}, state, {
+            'subscriber': payload.subscriber
         });
     }
 });

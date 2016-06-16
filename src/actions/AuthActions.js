@@ -4,6 +4,7 @@ export const USER_LOGGED_IN = 'USER_LOGGED_IN';
 export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
 export const LOGIN_AUTHENTICATING = 'LOGIN_AUTHENTICATING';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+export const SUBSCRIBER_SET = 'SUBSCRIBER_SET';
 
 export function loginUserSuccess(data) {
 
@@ -65,12 +66,41 @@ export function logoutSession() {
     }
 }
 
-export function validateAuthSession() {
+export function setSubscriber(subscriber) {
+
+    let url = false;
+    const parts = location.hostname.split('.');
+    if (!subscriber)
+    {
+        const defaultSubscriber = 'easydemo';
+        url = defaultSubscriber + '.' + parts[parts.length - 1];
+    } else if (parts.length > 2) {
+        url = parts[0] + '.' + parts[parts.length - 1];
+    }
+
+    if (url !== false)
+    {
+        url = location.protocol + '//' + url + (location.port && !isNaN(location.port) ? ':' + location.port : '') + location.pathname + location.hash;
+        console.warn('Redirecting to another URL: ' + url);
+        window.location.replace(url);
+    }
+
+    return {
+        type: SUBSCRIBER_SET,
+        payload: {
+            subscriber
+        }
+    }
+}
+
+export function validateAuthSession(subscriber) {
     return function(dispatch) {
         dispatch(loginUserRequest());
-        return jsonFetch('users.usersJSON.checkSession')
-        .then(response => {
+        return jsonFetch('users.usersJSON.checkSession', {
+            subscriber: subscriber
+        }).then(response => {
             try {
+                dispatch(setSubscriber(response.subscriber));
                 dispatch(loginUserSuccess(response));
             } catch (e) {
                 console.log('validateAuthSession', e);
@@ -87,14 +117,14 @@ export function validateAuthSession() {
     }
 }
 
-export function validateLogin(username, password) {
+export function validateLogin(username, password, subscriber) {
     return function(dispatch) {
         dispatch(loginUserRequest());
         return jsonFetch('users.usersJSON.checkLogin', {
             username: username,
             password: password,
-            subscriber: 'bouw'}
-        ).then(response => {
+            subscriber: subscriber
+        }).then(response => {
             try {
                 dispatch(loginUserSuccess(response));
             } catch (e) {

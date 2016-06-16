@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import Button from 'react-bootstrap/lib/Button'
-import Loading from './Loading'
+import React, { Component, PropTypes } from 'react';
+import Button from 'react-bootstrap/lib/Button';
+import Loading from './Loading';
 import styles from './LoadingButton.scss';
 
 export default class LoadingButton extends Component {
   render() {
-    let {icon, label, loading, loadingLabel, ...props} = this.props
+    let {icon, label, loading, loadingLabel, ...props} = this.props;
     if (!loadingLabel) {
       loadingLabel = `${label}ing`
     }

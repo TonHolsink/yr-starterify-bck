@@ -8,9 +8,9 @@
   text-align: center;
   margin-bottom: 25px;
   font-weight: 300;
-  background: url(../images/q-more.png) center top;
   background-size: 120px;
   background-repeat: no-repeat;
+  background-position: center top;
   overflow-y: auto;
 
   h1 {
@@ -36,9 +36,9 @@
 .login-header {
   height: 100px;
   background: #fff;
-  background: url(../images/q-more.png) 25px 25px;
   background-size: 140px;
   background-repeat: no-repeat;
+  background-position: 25px 25px;
 }
 .login-page,
 .register-page {
@@ -49,8 +49,8 @@
   left: 0;
   right: 0;
   top: 110px;
-  background: url(../images/chair-690341_1280.jpg) 100% #fff no-repeat;
-  background-size:cover;
+  background: center 100% #fff no-repeat;
+  background-size: cover;
 }
 .login-box,
 .register-box {
@@ -70,6 +70,7 @@
   padding: 20px;
   border-top: 0;
   color: #666;
+  opacity: 0.95;
 }
 .login-box-body .form-control-feedback,
 .register-box-body .form-control-feedback {

@@ -9,7 +9,7 @@ const PoweredBy = () => {
 
   return (
     <div>
-      <h2>Powered by</h2>
+      <h2>Powered by Joost Hofman 2.0</h2>
       <a href="https://david-dm.org/granze/react-starterify">
         <img src="https://david-dm.org/granze/react-starterify/status.svg" alt="deps status" />
       </a>

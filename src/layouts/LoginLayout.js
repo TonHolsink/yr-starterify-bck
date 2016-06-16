@@ -40,21 +40,26 @@ class LoginContainer extends Component {
     onClick = (e) => {
         e.preventDefault();
         localStorage.setItem('loginName', this.refs.name.value);
-        this.props.validateLogin(this.refs.name.value, this.refs.password.value);
+        this.props.validateLogin(this.refs.name.value, this.refs.password.value, this.props.subscriber.code);
     };
 
     render() {
-        
+
+        const locationResources = window.backendURL + this.props.subscriber.locationResources;
+        const resourcesLogo = {backgroundImage: 'url(' + locationResources + 'img/logo.png&w=200)'};
+        const resourcesBackground = {backgroundImage: 'url(' + locationResources + 'img/background.jpg)'};
+        const serviceNaam = this.props.subscriber.serviceName && this.props.subscriber.serviceName.capitalizeFirstLetter();
+
         return (
             <div>
-                <div className="login-header">
+                <div className="login-header" style={resourcesLogo}>
                 </div>
-                <div className="login-page">
+                <div className="login-page" style={resourcesBackground}>
                     <div className="login-box">
                         <div className="login-box-body">
                             <p className="login-box-msg">U dient eerst in te loggen op</p>
-                            <div className="login-logo">
-                                <h1>Warmte-monitor</h1>
+                            <div className="login-logo" style={resourcesLogo}>
+                                <h1>{serviceNaam}</h1>
                                 <span>Versie 0.3.0</span>
                             </div>
 
@@ -92,12 +97,14 @@ function mapStateToProps(state, ownProps) {
     const redirect = ownProps.location.query.redirect || '/';
     const statusText = state.authState.statusText || '';
     const statusError = state.authState.statusError || false;
+    const subscriber = state.authState.subscriber || false;
 
     return {
         isAuthenticated,
         redirect,
         statusText,
-        statusError
+        statusError,
+        subscriber
     }
 }
 

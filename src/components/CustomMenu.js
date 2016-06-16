@@ -4,10 +4,24 @@ import NotificationDropdownMenu from './dropdownmenu/NotificationDropdownMenu'
 import TaskDropdownMenu from './dropdownmenu/TaskDropdownMenu'
 import AccountInfo from './dropdownmenu/AccountInfo'
 
+import {EventEmitter} from 'events';
+
+
 /**
  * Custom menu balk
  */
 export default class CustomMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        window.controlsidebaremitter = new EventEmitter();
+    }
+
+    onClickControlBar = (e) => {
+        window.controlsidebaremitter.emit('toggle-controlbar');
+        console.log('EMIT');
+        e.preventDefault();
+    };
 
     render() {
         return (
@@ -20,7 +34,7 @@ export default class CustomMenu extends Component {
                     <AccountInfo cssClass="user user-menu" id="topbar-user-placeholder"/>
 
                     {/* Control Sidebar Toggle Button */}
-                    <li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li>
+                    <li><a href="#" onClick={this.onClickControlBar} data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li>
                 </ul>
             </div>
         );
