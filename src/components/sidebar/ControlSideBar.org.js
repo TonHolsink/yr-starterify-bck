@@ -1,19 +1,33 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import {skinChange} from '../../actions/AppActions';
+import {connect} from 'react-redux';
 
 export default class ControlSideBar extends Component {
 
+    static propTypes = {
+        isControlSideBarShown: PropTypes.bool.isRequired,
+        onSkinChange: PropTypes.func.isRequired,
+        skin: PropTypes.string.isRequired
+    };
+
+    componentWillReceiveProps(nextProps) {
+        const body = document.body;
+        body.className = `hold-transition ${nextProps.skin} sidebar-mini`;
+    }
+
     render() {
+        const {isControlSideBarShown, onSkinChange} = this.props;
+        const cso = 'control-sidebar-open';
         return (
 
-            <aside style={{position: 'fixed', height: 'auto'}}
-                   class="control-sidebar control-sidebar-dark control-sidebar-open">
+            <aside class={`control-sidebar control-sidebar-dark ${isControlSideBarShown ? cso : ''}`} >
                 {/* Create the tabs */}
                 <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    <li class="active"><a aria-expanded="true" href="#control-sidebar-theme-demo-options-tab"
+                    <li class="active"><a aria-expanded="true" href="javascript:void(0)"
                                           data-toggle="tab"><i class="fa fa-wrench"/></a></li>
-                    <li class=""><a aria-expanded="false" href="#control-sidebar-home-tab" data-toggle="tab"><i
+                    <li class=""><a aria-expanded="false" href="javascript:void(0)" data-toggle="tab"><i
                         class="fa fa-home"/></a></li>
-                    <li class=""><a aria-expanded="false" href="#control-sidebar-settings-tab" data-toggle="tab"><i
+                    <li class=""><a aria-expanded="false" href="javascript:void(0)" data-toggle="tab"><i
                         class="fa fa-gears"/></a></li>
                 </ul>
                 {/* Tab panes */}
@@ -150,6 +164,7 @@ export default class ControlSideBar extends Component {
                             <ul class="list-unstyled clearfix">
                                 <li style={{float:'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-blue')}
                                     data-skin="skin-blue"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -165,6 +180,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Blue</p></li>
                                 <li style={{float:'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-black')}
                                     data-skin="skin-black"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -179,6 +195,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Black</p></li>
                                 <li style={{float:'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-purple')}
                                     data-skin="skin-purple"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -193,6 +210,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Purple</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-green')}
                                     data-skin="skin-green"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -207,6 +225,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Green</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-red')}
                                     data-skin="skin-red"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -221,6 +240,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Red</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-yellow')}
                                     data-skin="skin-yellow"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -235,6 +255,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin">Yellow</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-blue-light')}
                                     data-skin="skin-blue-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -250,6 +271,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin" style={{fontSize: '12px'}}>Blue Light</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-black-light')}
                                     data-skin="skin-black-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -264,6 +286,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin" style={{fontSize: '12px'}}>Black Light</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-purple-light')}
                                     data-skin="skin-purple-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -278,6 +301,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin" style={{fontSize: '12px'}}>Purple Light</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-green-light')}
                                     data-skin="skin-green-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -292,6 +316,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin" style={{fontSize: '12px'}}>Green Light</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-red-light')}
                                     data-skin="skin-red-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -306,6 +331,7 @@ export default class ControlSideBar extends Component {
                                 </a><p class="text-center no-margin" style={{fontSize: '12px'}}>Red Light</p></li>
                                 <li style={{float: 'left', width: '33.33333%', padding: '5px'}}><a
                                     href="javascript:void(0);"
+                                    onClick={() => onSkinChange('skin-yellow-light')}
                                     data-skin="skin-yellow-light"
                                     style={{display: 'block', boxShadow: '0 0 3px rgba(0,0,0,0.4)'}}
                                     class="clearfix full-opacity-hover">
@@ -398,3 +424,21 @@ export default class ControlSideBar extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isControlSideBarShown: state.appState.isControlSideBarShown,
+        skin: state.appState.skin
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSkinChange: (skin) => dispatch(skinChange(skin))
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ControlSideBar)

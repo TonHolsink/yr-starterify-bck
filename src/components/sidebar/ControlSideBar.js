@@ -1,8 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {skinChange} from '../../actions/AppActions';
 import {connect} from 'react-redux';
+import Nav from 'react-bootstrap/lib/Nav'
+import NavItem from 'react-bootstrap/lib/NavItem'
 
-export default class ControlSideBar extends Component {
+class ControlSideBar extends Component {
 
     static propTypes = {
         isControlSideBarShown: PropTypes.bool.isRequired,
@@ -10,10 +12,19 @@ export default class ControlSideBar extends Component {
         skin: PropTypes.string.isRequired
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {activeTab: 1};
+    }
+
     componentWillReceiveProps(nextProps) {
         const body = document.body;
         body.className = `hold-transition ${nextProps.skin} sidebar-mini`;
     }
+
+    handleTabSelect = (eventKey) => {
+        this.setState(Object.assign({}, this.state, {activeTab: eventKey}))
+    };
 
     render() {
         const {isControlSideBarShown, onSkinChange} = this.props;
@@ -22,18 +33,16 @@ export default class ControlSideBar extends Component {
 
             <aside class={`control-sidebar control-sidebar-dark ${isControlSideBarShown ? cso : ''}`} >
                 {/* Create the tabs */}
-                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    <li class="active"><a aria-expanded="true" href="#control-sidebar-theme-demo-options-tab"
-                                          data-toggle="tab"><i class="fa fa-wrench"/></a></li>
-                    <li class=""><a aria-expanded="false" href="#control-sidebar-home-tab" data-toggle="tab"><i
-                        class="fa fa-home"/></a></li>
-                    <li class=""><a aria-expanded="false" href="#control-sidebar-settings-tab" data-toggle="tab"><i
-                        class="fa fa-gears"/></a></li>
-                </ul>
+                <Nav bsStyle="tabs" className="control-sidebar-tabs" justified activeKey={this.state.activeTab} onSelect={this.handleTabSelect}>
+                    <NavItem eventKey={1} href="javascript:void(0)"><i class="fa fa-wrench"/></NavItem>
+                    <NavItem eventKey={2} href="javascript:void(0)" title="Item"><i class="fa fa-home"/></NavItem>
+                    <NavItem eventKey={3} href="javascript:void(0)"><i class="fa fa-gears"/></NavItem>
+                </Nav>
+
                 {/* Tab panes */}
                 <div class="tab-content">
                     {/* Home tab content */}
-                    <div class="tab-pane" id="control-sidebar-home-tab">
+                    <div class={`tab-pane ${this.state.activeTab === 2 ? 'active' : ''}`} id="control-sidebar-home-tab">
                         <h3 class="control-sidebar-heading">Recent Activity</h3>
                         <ul class="control-sidebar-menu">
                             <li>
@@ -137,7 +146,7 @@ export default class ControlSideBar extends Component {
                         {/* /.control-sidebar-menu */}
 
                     </div>
-                    <div class="tab-pane active" id="control-sidebar-theme-demo-options-tab">
+                    <div class={`tab-pane ${this.state.activeTab === 1 ? 'active' : ''}`} id="control-sidebar-theme-demo-options-tab">
                         <div><h4 class="control-sidebar-heading">Layout Options</h4>
                             <div class="form-group"><label class="control-sidebar-subheading"><input data-layout="fixed"
                                                                                                      class="pull-right"
@@ -350,7 +359,7 @@ export default class ControlSideBar extends Component {
                     {/* /.tab-pane */}
 
                     {/* Settings tab content */}
-                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <div class={`tab-pane ${this.state.activeTab === 3 ? 'active' : ''}`} id="control-sidebar-settings-tab">
                         <form method="post">
                             <h3 class="control-sidebar-heading">General Settings</h3>
 

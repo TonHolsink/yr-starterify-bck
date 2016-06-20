@@ -1,0 +1,69 @@
+@import 'mixins';
+
+.subscriber-banner {
+  height: 75px;
+  background-image: url('../images/header.jpg');
+  background-repeat: no-repeat;
+  background-position: left top;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+@media (min-width: 768px) {
+  .subscriber-banner {
+    height: 150px;
+    border-bottom-width: 4px;
+  }
+}
+
+.layout-top-nav {
+  @media (max-width: 991px) {
+    .navbar-collapse {
+      + .navbar-custom-menu {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 40px;
+      }
+      &.collapse {
+        float: none !important;
+      }
+    }
+  }
+  .navbar-collapse, .navbar-form {
+    border-color: transparent;
+  }
+  .navbar-static-top {
+    > .container {
+      padding: 0;
+    }
+  }
+  .navbar-header {
+    .navbar-toggle {
+      background-color: transparent;
+    }
+    .icon-bar {
+      background-color: #fff;
+      width: 12px;
+      +.icon-bar {
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+@import 'black';
+@import 'black-light';
+.skin-blue {@include generate-skin(#3c8dbc, #367fa9, #357ca5)};
+.skin-blue-light {@include generate-skin-light(#3c8dbc, #367fa9, #3b8ab8)};
+.skin-green {@include generate-skin(#00a65a, #008d4c, #008749)};
+.skin-green-light {@include generate-skin-light(#00a65a, #008d4c, #00a157)};
+.skin-purple {@include generate-skin(#605ca8, #555299, #545096)};
+.skin-purple-light {@include generate-skin-light(#605ca8, #555299, #5d59a6)};
+.skin-red {@include generate-skin(#dd4b39, #d73925, #d33724)};
+.skin-red-light {@include generate-skin-light(#dd4b39, #d73925, #dc4735)};
+.skin-yellow {@include generate-skin(#f39c12, #e08e0b, #db8b0b)};
+.skin-yellow-light {@include generate-skin-light(#f39c12, #e08e0b, #f39a0d)};
+
+@import 'custom';

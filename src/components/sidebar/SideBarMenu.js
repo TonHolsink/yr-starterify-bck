@@ -1,13 +1,15 @@
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {layoutChange} from '../../actions/AppActions';
 import TreeViewMenu from './TreeViewMenu'
 import SideBarLink from './SideBarLink';
-import './SidebarMenu.scss';
-import { setContentMinHeight } from './utils';
+import {setContentMinHeight} from './utils';
 
-export default class SideBarMenu extends Component {
+class SideBarMenu extends Component {
 
     static propTypes = {
-        allowMultiple: PropTypes.bool
+        allowMultiple: PropTypes.bool,
+        onLayoutChange: PropTypes.func
     };
 
     static defaultProps = {
@@ -40,6 +42,18 @@ export default class SideBarMenu extends Component {
                                     {title: 'Chat', href: '#', icon: 'fa-commenting'},
                                     {title: 'Outbound', href: '#', icon: 'fa-mail-forward'},
                                     {title: 'Post', href: '#', icon: 'fa-inbox'}
+                                ]
+                            }
+                      }
+        />,
+        <TreeViewMenu handleClick={this.handleTreeViewMenuClick.bind(this)} ref={(ref) => this.tvRefs.push(ref)}
+                      menu={
+                            {
+                                title: 'Layout',
+                                icon: 'fa-files-o',
+                                list: [
+                                    {title: 'Side Navigation', href: '#', icon: 'fa-circle-o', onClick: () => this.props.onLayoutChange('sidebar')},
+                                    {title: 'Top Navigation', href: '#', icon: 'fa-circle-o', onClick: () => this.props.onLayoutChange('topbar')}
                                 ]
                             }
                       }
@@ -111,3 +125,14 @@ export default class SideBarMenu extends Component {
         )
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLayoutChange: (layout) => dispatch(layoutChange(layout))
+    }
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(SideBarMenu)

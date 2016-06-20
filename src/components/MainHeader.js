@@ -5,8 +5,11 @@ import array from 'lodash/array';
 import { connect } from 'react-redux';
 import {setContentMinHeight} from './sidebar/utils';
 
-
 class MainHeader extends Component {
+
+    static propTypes = {
+        subscriber: PropTypes.object
+    };
 
     onClickSideBar = (e) => {
         const body = document.body;
@@ -46,7 +49,7 @@ class MainHeader extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     const subscriber = state.authState.subscriber || false;
     return {
         subscriber

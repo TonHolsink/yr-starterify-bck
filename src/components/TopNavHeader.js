@@ -1,17 +1,22 @@
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {layoutChange} from '../actions/AppActions';
 import {Link} from 'react-router';
 import CustomMenu from './CustomMenu';
 
 import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
-export default class TopNavHeader extends Component {
 
-    onClickToggle = (e) => {
-        console.log('KLIK');
-        e.preventDefault();
+class TopNavHeader extends Component {
 
+    static propTypes = {
+        onLayoutChange: PropTypes.func,
+        subscriber: PropTypes.object
     };
 
     render() {
+        const { subscriberName } = this.props.subscriber;
+        const nameInSiderbar = subscriberName && subscriberName.capitalizeFirstLetter();
+
         return (
             <header className="main-header">
                 {/* Header Navbar: style can be found in header.less */}
@@ -20,12 +25,15 @@ export default class TopNavHeader extends Component {
                     <div class="container">
                         <div class="navbar-header">
                             {/* Logo */}
-                            <Link className="logo nav-bar-brand" to="/"/>
+                            <Link className="navbar-brand" to="/">
+                                <b>{nameInSiderbar}</b>
+                            </Link>
+                            <Link className="navbar-brand" to="/"/>
                             <Navbar.Toggle/>
                         </div>
                         <Navbar.Collapse style={{float: 'left'}}>
                             <Nav>
-                                <NavItem eventKey={1} href="#">Link</NavItem>
+                                <NavItem eventKey={1} href="#" onSelect={() => this.props.onLayoutChange('sidebar')}>Sidebar</NavItem>
                                 <NavItem eventKey={2} href="#">Link</NavItem>
                                 <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                                     <MenuItem eventKey={3.1}>Action</MenuItem>
@@ -50,3 +58,21 @@ export default class TopNavHeader extends Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    const subscriber = state.authState.subscriber || false;
+    return {
+        subscriber
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLayoutChange: (layout) => dispatch(layoutChange(layout))
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TopNavHeader)

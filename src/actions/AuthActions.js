@@ -70,12 +70,16 @@ export function setSubscriber(subscriber) {
 
     let url = false;
     const parts = location.hostname.split('.');
+
     if (!subscriber)
     {
         const defaultSubscriber = 'easydemo';
-        url = defaultSubscriber + '.' + parts[parts.length - 1];
-    } else if (parts.length > 2) {
-        url = parts[0] + '.' + parts[parts.length - 1];
+        if (parts.indexOf('localhost') > -1)
+        {
+            url = defaultSubscriber + '.localhost';
+        } else if (parts.indexOf('demo') > -1 && parts.indexOf('yourrequest') > -1) {
+            url = defaultSubscriber + '.demo.yourrequest.nl';
+        }
     }
 
     if (url !== false)

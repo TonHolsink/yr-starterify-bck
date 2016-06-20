@@ -10,14 +10,15 @@ import {controlSideBarToggle} from '../actions/AppActions'
 /**
  * Custom menu balk
  */
-export default class CustomMenu extends Component {
+class CustomMenu extends Component {
 
     static propTypes = {
-        onControlSideBarToggle: PropTypes.func.isRequired
+        onControlSideBarToggle: PropTypes.func.isRequired,
+        layout: PropTypes.string.isRequired
     };
 
     render() {
-        const {onControlSideBarToggle} = this.props;
+        const {layout, onControlSideBarToggle} = this.props;
 
         return (
             <div class="navbar-custom-menu">
@@ -28,13 +29,18 @@ export default class CustomMenu extends Component {
                     <TaskDropdownMenu cssClass="tasks-menu" id="topbar-tasks-placeholder"/>
                     <AccountInfo cssClass="user user-menu" id="topbar-user-placeholder"/>
 
-                    {/* Control Sidebar Toggle Button */}
-                    <li><a href="#" onClick={onControlSideBarToggle} data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li>
+                    {layout === 'sidebar' ? <li><a href="javascript:void(0)" onClick={onControlSideBarToggle} data-toggle="control-sidebar"><i class="fa fa-gears" /></a></li> : ''}
                 </ul>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        layout: state.appState.layout
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -43,6 +49,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(CustomMenu)

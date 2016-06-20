@@ -57,7 +57,7 @@ export default class TreeViewMenu extends Component {
      */
     renderMenu() {
         const items = this.props.menu.list.map((item, index) => {
-            return (<li key={index}><a href={item.href}><i class={"fa " + item.icon}/> {item.title}</a></li>)
+            return (<li key={index}><a href={item.href} onClick={item.onClick}><i class={"fa " + item.icon}/> {item.title}</a></li>)
         });
         return (
             <ul style={this.state.toggle ? {display: 'block'} : {display: 'none'}}
